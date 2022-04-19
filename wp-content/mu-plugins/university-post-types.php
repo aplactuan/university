@@ -1,7 +1,7 @@
 <?php
 
-//add an event custom post type
 function university_post_types() {
+	//event post type
 	register_post_type('event', [
 		'supports' => ['title', 'editor', 'excerpt'],
 		'rewrite' => ['slug' => 'events'],
@@ -17,6 +17,24 @@ function university_post_types() {
 			'singular_name' => 'Event'
 		],
 		'menu_icon' => 'dashicons-calendar'
+	]);
+
+	//program post type
+	register_post_type('program', [
+		'supports' => ['title', 'editor'],
+		'rewrite' => ['slug' => 'programs'],
+		'has_archive' => true,
+		'public' => true,
+		'show_in_rest' => true,
+		'labels' => [
+			'name' => 'Programs',
+			'add_new' => 'Add Program',
+			'add_new_item' => 'Add New Program',
+			'edit_item' => 'Edit Program',
+			'all_items' => 'All Program',
+			'singular_name' => 'Program'
+		],
+		'menu_icon' => 'dashicons-awards'
 	]);
 }
 add_action('init', 'university_post_types');
