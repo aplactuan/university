@@ -1,13 +1,9 @@
-<?php get_header(); ?>
-    <div class="page-banner">
-        <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg') ?>)"></div>
-        <div class="page-banner__content container container--narrow">
-            <h1 class="page-banner__title">Welcome to my Blog</h1>
-            <div class="page-banner__intro">
-                <p>Okay</p>
-            </div>
-        </div>
-    </div>
+<?php get_header();
+pageBanner([
+    'title' => 'Welcome to my Blog',
+    'subtitle' => 'This is the university subtitle'
+]);
+?>
     <div class="container container--narrow page-section">
         <?php while (have_posts()) {
 	        the_post(); ?>
