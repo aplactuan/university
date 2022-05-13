@@ -2,3 +2,5 @@
 /.vscode
 /wp-content/uploads/
 /wp-content/plugins/
+/wp-content/themes/university-theme/node_modules/
+/wp-content/themes/university-theme/build/
