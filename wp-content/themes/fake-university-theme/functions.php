@@ -8,3 +8,9 @@ function fake_university_files() {
 }
 
 add_action('wp_enqueue_scripts', 'fake_university_files');
+
+function fake_university_features() {
+	add_theme_support('title-tag');
+}
+
+add_action('after_setup_theme', 'fake_university_features');
