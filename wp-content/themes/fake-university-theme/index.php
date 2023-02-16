@@ -27,7 +27,9 @@
             </p>
         </div>
         <?php
-    endwhile; ?>
+    endwhile;
+    echo paginate_links()
+    ?>
     </div>
 
 <?php  get_footer(); ?>
