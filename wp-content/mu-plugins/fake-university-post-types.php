@@ -5,6 +5,7 @@ function fake_university_post_types() {
 		'has_archive' => true,
 		'public' => true,
 		'show_in_rest' => true,
+		'supports' => ['title', 'excerpt', 'editor'],
 		'menu_icon' => 'dashicons-calendar',
 		'labels' => [
 			'name' => 'Events',

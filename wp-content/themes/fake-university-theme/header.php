@@ -18,7 +18,11 @@
                     <ul>
                         <li <?php if (is_page('about-us') || wp_get_post_parent_id(0) == 11) { echo 'class="current-menu-item"'; } ?>><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
                         <li><a href="#">Programs</a></li>
-                        <li><a href="#">Events</a></li>
+                        <li
+                            class="<?php echo (get_post_type() === 'event') ? 'current-menu-item' : '' ?>"
+                        >
+                            <a href="<?php echo get_post_type_archive_link('event')?>">Events</a>
+                        </li>
                         <li><a href="#">Campuses</a></li>
                         <li
                             class="<?php echo (get_post_type() === 'post') ? 'current-menu-item' : '' ?>"
