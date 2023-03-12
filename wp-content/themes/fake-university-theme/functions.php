@@ -14,3 +14,21 @@ function fake_university_features() {
 }
 
 add_action('after_setup_theme', 'fake_university_features');
+
+function fake_university_get_posts($query) {
+	if (!is_admin() AND is_post_type_archive('event') AND $query->is_main_query()) {
+		$query->set('order_by', 'meta_value_num');
+		$query->set('meta_key', 'event_date');
+		$query->set('order', 'asc');
+		$query->set('meta_query', [
+			[
+				'key' => 'event_date',
+				'compare' => '>=',
+				'value' => $today = date('Ymd'),
+				'type' => 'NUMERIC'
+			]
+		]);
+	}
+}
+
+add_action('pre_get_posts', 'fake_university_get_posts');
