@@ -19,7 +19,7 @@
                         <li <?php if (is_page('about-us') || wp_get_post_parent_id(0) == 11) { echo 'class="current-menu-item"'; } ?>><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
                         <li><a href="#">Programs</a></li>
                         <li
-                            class="<?php echo (get_post_type() === 'event') ? 'current-menu-item' : '' ?>"
+                            class="<?php echo (get_post_type() === 'event' or is_page('past-events')) ? 'current-menu-item' : '' ?>"
                         >
                             <a href="<?php echo get_post_type_archive_link('event')?>">Events</a>
                         </li>
