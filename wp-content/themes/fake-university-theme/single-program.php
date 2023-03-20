@@ -22,7 +22,7 @@ while (have_posts()) :
 			<?php the_content() ?>
 		</div>
 		<?php
-		$homepageEvent = new WP_Query([
+		$programEvents = new WP_Query([
 			'posts_per_page' => 2,
 			'order_by' => 'meta_value_num',
 			'meta_key' => 'event_date',
@@ -42,26 +42,33 @@ while (have_posts()) :
                 ]
 			]
 		]);
-
-		while ($homepageEvent->have_posts()):
-			$homepageEvent->the_post();
-			?>
-            <div class="event-summary">
-				<?php $eventDate = new DateTime(get_field('event_date')); ?>
-                <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-                    <span class="event-summary__month"><?php echo  $eventDate->format('M'); ?></span>
-                    <span class="event-summary__day"><?php echo  $eventDate->format('d'); ?></span>
-                </a>
-                <div class="event-summary__content">
-                    <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-                    <p>
-						<?php echo has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18) ?>
-                        <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a>
-                    </p>
+        if ($programEvents->have_posts()) : ?>
+            <hr class="section-break">
+            <h2 class="headline headline--medium">
+                Related <?php echo get_the_title() ?> Events
+            </h2>
+            <?php
+	        while ($programEvents->have_posts()):
+		        $programEvents->the_post();
+		        ?>
+                <div class="event-summary">
+			        <?php $eventDate = new DateTime(get_field('event_date')); ?>
+                    <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
+                        <span class="event-summary__month"><?php echo  $eventDate->format('M'); ?></span>
+                        <span class="event-summary__day"><?php echo  $eventDate->format('d'); ?></span>
+                    </a>
+                    <div class="event-summary__content">
+                        <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+                        <p>
+					        <?php echo has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18) ?>
+                            <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-		<?php
-		endwhile;
+	        <?php
+	        endwhile;
+        endif;
+
 		wp_reset_postdata();
 		?>
 	</div>
