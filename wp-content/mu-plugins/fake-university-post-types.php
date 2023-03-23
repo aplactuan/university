@@ -33,6 +33,21 @@ function fake_university_post_types() {
 			'singular_name' => 'Program'
 		]
 	]);
+
+	//Professor post type
+	register_post_type('professor', [
+		'public' => true,
+		'show_in_rest' => true,
+		'supports' => ['title', 'editor'],
+		'menu_icon' => 'dashicons-welcome-learn-more',
+		'labels' => [
+			'name' => 'Professors',
+			'add_new_item' => 'Add new Professors',
+			'edit_item' => 'Edit Professors',
+			'all_items' => 'All Professors',
+			'singular_name' => 'Professor'
+		]
+	]);
 }
 
 add_action('init', 'fake_university_post_types');

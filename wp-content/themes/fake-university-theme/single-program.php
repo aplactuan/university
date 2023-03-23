@@ -22,6 +22,38 @@ while (have_posts()) :
 			<?php the_content() ?>
 		</div>
 		<?php
+		$programProfessors = new WP_Query([
+			'posts_per_page' => -1,
+			'order_by' => 'title',
+			'order' => 'ASC',
+			'post_type' => 'professor',
+			'meta_query' => [
+				[
+					'key' => 'related_programs',
+					'compare' => 'LIKE',
+					'value' => '"' . get_the_ID() . '"'
+				]
+			]
+		]);
+		if ($programProfessors->have_posts()) : ?>
+            <hr class="section-break">
+            <h2 class="headline headline--medium">
+                <?php echo get_the_title() ?> Professors
+            </h2>
+            <ul>
+                <?php
+                while ($programProfessors->have_posts()):
+                    $programProfessors->the_post();
+                    ?>
+                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                <?php
+                endwhile; ?>
+            </ul>
+		<?php endif;
+
+		wp_reset_postdata();
+		?>
+		<?php
 		$programEvents = new WP_Query([
 			'posts_per_page' => 2,
 			'order_by' => 'meta_value_num',
