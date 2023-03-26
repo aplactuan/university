@@ -38,7 +38,7 @@ function fake_university_post_types() {
 	register_post_type('professor', [
 		'public' => true,
 		'show_in_rest' => true,
-		'supports' => ['title', 'editor'],
+		'supports' => ['title', 'editor', 'thumbnail'],
 		'menu_icon' => 'dashicons-welcome-learn-more',
 		'labels' => [
 			'name' => 'Professors',

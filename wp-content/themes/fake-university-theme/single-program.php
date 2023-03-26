@@ -40,12 +40,17 @@ while (have_posts()) :
             <h2 class="headline headline--medium">
                 <?php echo get_the_title() ?> Professors
             </h2>
-            <ul>
+            <ul class="professor-cards">
                 <?php
                 while ($programProfessors->have_posts()):
                     $programProfessors->the_post();
                     ?>
-                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                    <li class="professor-card__list-item">
+                        <a href="<?php the_permalink(); ?>" class="professor-card">
+                            <img src="<?php the_post_thumbnail_url(); ?>" class="professor-card__image" >
+                            <span class="professor-card__name"><?php the_title(); ?></span>
+                        </a>
+                    </li>
                 <?php
                 endwhile; ?>
             </ul>
