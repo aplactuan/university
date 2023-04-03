@@ -8,7 +8,10 @@ function pageBanner($args = NULL) {
 	}
 
 	if (!isset($args['photo'])) {
-		if (get_field('page_banner_image')) {
+		if (get_field('page_banner_image')
+            && !is_home()
+            && !is_archive()
+        ) {
 			$args['photo'] = get_field('page_banner_image')['sizes']['pageBanner'];
 		}
 		else {
