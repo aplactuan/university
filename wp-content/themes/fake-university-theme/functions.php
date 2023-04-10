@@ -72,3 +72,8 @@ function fake_university_get_posts($query) {
 }
 
 add_action('pre_get_posts', 'fake_university_get_posts');
+function fake_university_google_api($api) {
+    $api['key'] = 'secret';
+    return $api;
+}
+add_filter('acf/fields/google_map/api', 'fake_university_google_api');
