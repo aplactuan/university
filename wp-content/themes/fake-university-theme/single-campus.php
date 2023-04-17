@@ -15,33 +15,32 @@ while (have_posts()) :
 			<?php the_content() ?>
 		</div>
 		<?php
-		$programProfessors = new WP_Query([
+		$campusPrograms = new WP_Query([
 			'posts_per_page' => -1,
 			'order_by' => 'title',
 			'order' => 'ASC',
-			'post_type' => 'professor',
+			'post_type' => 'program',
 			'meta_query' => [
 				[
-					'key' => 'related_programs',
+					'key' => 'related_campus',
 					'compare' => 'LIKE',
 					'value' => '"' . get_the_ID() . '"'
 				]
 			]
 		]);
-		if ($programProfessors->have_posts()) : ?>
+		if ($campusPrograms->have_posts()) : ?>
 			<hr class="section-break">
 			<h2 class="headline headline--medium">
-				<?php echo get_the_title() ?> Professors
+				Programs found in this Campus
 			</h2>
-			<ul class="professor-cards">
+			<ul class="link-list min-list">
 				<?php
-				while ($programProfessors->have_posts()):
-					$programProfessors->the_post();
+				while ($campusPrograms->have_posts()):
+					$campusPrograms->the_post();
 					?>
-					<li class="professor-card__list-item">
-						<a href="<?php the_permalink(); ?>" class="professor-card">
-							<img src="<?php the_post_thumbnail_url('professorLandscape'); ?>" class="professor-card__image" >
-							<span class="professor-card__name"><?php the_title(); ?></span>
+					<li>
+						<a href="<?php the_permalink(); ?>">
+							<?php the_title(); ?>
 						</a>
 					</li>
 				<?php
@@ -51,41 +50,7 @@ while (have_posts()) :
 
 		wp_reset_postdata();
 		?>
-		<?php
-		$programEvents = new WP_Query([
-			'posts_per_page' => 2,
-			'order_by' => 'meta_value_num',
-			'meta_key' => 'event_date',
-			'order' => 'ASC',
-			'post_type' => 'event',
-			'meta_query' => [
-				[
-					'key' => 'event_date',
-					'compare' => '>=',
-					'value' => $today = date('Ymd'),
-					'type' => 'NUMERIC'
-				],
-				[
-					'key' => 'related_programs',
-					'compare' => 'LIKE',
-					'value' => '"' . get_the_ID() . '"'
-				]
-			]
-		]);
-		if ($programEvents->have_posts()) : ?>
-			<hr class="section-break">
-			<h2 class="headline headline--medium">
-				Related <?php echo get_the_title() ?> Events
-			</h2>
-			<?php
-			while ($programEvents->have_posts()):
-				$programEvents->the_post();
-				get_template_part('template-parts/content-event');
-			endwhile;
-		endif;
 
-		wp_reset_postdata();
-		?>
 	</div>
 <?php endwhile;
 get_footer();
