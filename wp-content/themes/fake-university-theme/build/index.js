@@ -186,16 +186,25 @@ __webpack_require__.r(__webpack_exports__);
 
 class Search {
   constructor() {
+    this.searchField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-term");
     this.openButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".js-search-trigger");
     this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay__close");
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay");
     this.isOverlayOpen = false;
     this.events();
+    this.typingTimer;
   }
   events() {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("keydown", this.manageKeyDown.bind(this));
+    this.searchField.on("keydown", this.keyboardLogic.bind(this));
+  }
+  keyboardLogic() {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(function () {
+      console.log("Hello there");
+    }, 2000);
   }
   manageKeyDown(e) {
     if (e.keyCode == 83 && !this.isOverlayOpen) {
