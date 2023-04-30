@@ -2,12 +2,15 @@ import $ from "jquery"
 
 class Search {
     constructor() {
+        this.resultsDiv = $("#search-overlay__results")
         this.searchField = $("#search-term")
         this.openButton = $(".js-search-trigger")
         this.closeButton = $(".search-overlay__close")
         this.searchOverlay = $(".search-overlay")
         this.isOverlayOpen = false
         this.events()
+        this.isSpinnerVisible = false
+        this.previousValue
         this.typingTimer
     }
 
@@ -19,10 +22,27 @@ class Search {
     }
 
     keyboardLogic() {
-        clearTimeout(this.typingTimer)
-        this.typingTimer = setTimeout( function() {
-            console.log("Hello there")
-        }, 2000)
+        if (this.searchField.val() != this.previousValue) {
+            clearTimeout(this.typingTimer)
+
+            if (this.searchField.val()) {
+                if (!this.isSpinnerVisible) {
+                    this.resultsDiv.html('<div class="spinner-loader"></div>')
+                    this.isSpinnerVisible = true
+                }
+                this.typingTimer = setTimeout(this.getResults.bind(this), 2000)
+            } else {
+                this.resultsDiv.html("")
+                this.isSpinnerVisible = false
+            }
+        }
+
+        this.previousValue = this.searchField.val()
+    }
+
+    getResults() {
+        this.resultsDiv.html("Imagine real search results here...")
+        this.isSpinnerVisible = false
     }
 
     manageKeyDown(e) {

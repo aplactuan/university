@@ -186,12 +186,15 @@ __webpack_require__.r(__webpack_exports__);
 
 class Search {
   constructor() {
+    this.resultsDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-overlay__results");
     this.searchField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-term");
     this.openButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".js-search-trigger");
     this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay__close");
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay");
     this.isOverlayOpen = false;
     this.events();
+    this.isSpinnerVisible = false;
+    this.previousValue;
     this.typingTimer;
   }
   events() {
@@ -201,10 +204,24 @@ class Search {
     this.searchField.on("keydown", this.keyboardLogic.bind(this));
   }
   keyboardLogic() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(function () {
-      console.log("Hello there");
-    }, 2000);
+    if (this.searchField.val() != this.previousValue) {
+      clearTimeout(this.typingTimer);
+      if (this.searchField.val()) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.html('<div class="spinner-loader"></div>');
+          this.isSpinnerVisible = true;
+        }
+        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+      } else {
+        this.resultsDiv.html("");
+        this.isSpinnerVisible = false;
+      }
+    }
+    this.previousValue = this.searchField.val();
+  }
+  getResults() {
+    this.resultsDiv.html("Imagine real search results here...");
+    this.isSpinnerVisible = false;
   }
   manageKeyDown(e) {
     if (e.keyCode == 83 && !this.isOverlayOpen) {
