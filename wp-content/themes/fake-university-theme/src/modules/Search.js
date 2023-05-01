@@ -18,7 +18,7 @@ class Search {
         this.openButton.on("click", this.openOverlay.bind(this))
         this.closeButton.on("click", this.closeOverlay.bind(this))
         $(document).on("keydown", this.manageKeyDown.bind(this))
-        this.searchField.on("keydown", this.keyboardLogic.bind(this))
+        this.searchField.on("keyup", this.keyboardLogic.bind(this))
     }
 
     keyboardLogic() {
@@ -41,12 +41,13 @@ class Search {
     }
 
     getResults() {
-        this.resultsDiv.html("Imagine real search results here...")
-        this.isSpinnerVisible = false
+        $.getJSON('http://university.test/wp-json/wp/v2/posts?search=' + this.searchField.val(), function (posts) {
+            alert(posts[0].title.rendered)
+        })
     }
 
     manageKeyDown(e) {
-        if (e.keyCode == 83 && !this.isOverlayOpen) {
+        if (e.keyCode == 83 && !this.isOverlayOpen && !$("input, textarea").is(":focus")) {
             this.openOverlay()
         }
 

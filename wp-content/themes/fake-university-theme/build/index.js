@@ -201,7 +201,7 @@ class Search {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("keydown", this.manageKeyDown.bind(this));
-    this.searchField.on("keydown", this.keyboardLogic.bind(this));
+    this.searchField.on("keyup", this.keyboardLogic.bind(this));
   }
   keyboardLogic() {
     if (this.searchField.val() != this.previousValue) {
@@ -220,11 +220,12 @@ class Search {
     this.previousValue = this.searchField.val();
   }
   getResults() {
-    this.resultsDiv.html("Imagine real search results here...");
-    this.isSpinnerVisible = false;
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON('http://university.test/wp-json/wp/v2/posts?search=' + this.searchField.val(), function (posts) {
+      alert(posts[0].title.rendered);
+    });
   }
   manageKeyDown(e) {
-    if (e.keyCode == 83 && !this.isOverlayOpen) {
+    if (e.keyCode == 83 && !this.isOverlayOpen && !jquery__WEBPACK_IMPORTED_MODULE_0___default()("input, textarea").is(":focus")) {
       this.openOverlay();
     }
     if (e.keyCode == 27 && this.isOverlayOpen) {
