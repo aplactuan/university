@@ -41,8 +41,13 @@ class Search {
     }
 
     getResults() {
-        $.getJSON('http://university.test/wp-json/wp/v2/posts?search=' + this.searchField.val(), function (posts) {
-            alert(posts[0].title.rendered)
+        $.getJSON('http://university.test/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
+            this.resultsDiv.html(`
+                <h2 class="search-overlay__section-title">Search Results</h2>
+                <ul class="link-list min-list">
+                    ${posts.map(post => `<li><a href="${post.link}">${post.title.rendered}</a></li>`)}
+                </ul>
+            `)
         })
     }
 
