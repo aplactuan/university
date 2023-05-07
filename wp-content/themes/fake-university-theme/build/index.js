@@ -220,13 +220,15 @@ class Search {
     this.previousValue = this.searchField.val();
   }
   getResults() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON('http://university.test/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(siteData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
       this.resultsDiv.html(`
                 <h2 class="search-overlay__section-title">Search Results</h2>
+                ${posts.length ? '<ul class="link-list min-list">' : '<p>No results found</p>'}
                 <ul class="link-list min-list">
                     ${posts.map(post => `<li><a href="${post.link}">${post.title.rendered}</a></li>`)}
-                </ul>
+                ${posts.length ? '</ul>' : ''}
             `);
+      this.isSpinnerVisible = false;
     });
   }
   manageKeyDown(e) {

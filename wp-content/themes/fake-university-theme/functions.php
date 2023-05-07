@@ -37,6 +37,10 @@ function fake_university_files() {
 	wp_enqueue_style('custom_google_fonts', 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
 	wp_enqueue_style('fake_university_main_style', get_theme_file_uri('/build/style-index.css'));
 	wp_enqueue_style('fake_university_extra_style', get_theme_file_uri('/build/index.css'));
+
+    wp_localize_script('fake_university_main_script', 'siteData', [
+            'root_url' => get_site_url()
+    ]);
 }
 
 add_action('wp_enqueue_scripts', 'fake_university_files');
