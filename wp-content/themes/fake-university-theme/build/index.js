@@ -227,7 +227,12 @@ class Search {
                 <h2 class="search-overlay__section-title">Search Results</h2>
                 ${concatResults.length ? '<ul class="link-list min-list">' : '<p>No results found</p>'}
                 <ul class="link-list min-list">
-                    ${concatResults.map(concatResult => `<li><a href="${concatResult.link}">${concatResult.title.rendered}</a></li>`)}
+                    ${concatResults.map(concatResult => `
+                        <li>
+                            <a href="${concatResult.link}">${concatResult.title.rendered}</a>
+                            ${concatResult.type === 'post' ? ` by ${concatResult.authorName}` : ''}
+                        </li>
+                    `)}
                 ${concatResults.length ? '</ul>' : ''}
             `);
     }, () => {
