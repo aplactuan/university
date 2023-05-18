@@ -1,14 +1,27 @@
 <?php
+add_action('rest_api_init', 'universityRegisterRoute');
 
-add_action('register_api_init', 'universityRegisterRoute');
-
-function universitySearchRoute() {
+function universityRegisterRoute() {
 	register_rest_route('university/v1', 'search',  [
-		'method' => WP_REST_Server::READABLE,
+		'method' => "GET",
 		'callback' => 'universitySearchResults'
 	]);
 }
 
 function universitySearchResults() {
-	return "It's morbin time";
+	$professors = new WP_Query([
+		'post_type' => 'professor'
+	]);
+
+	$professorList = [];
+
+	while ($professors->have_posts()) {
+		$professors->the_post();
+		$professorList[] = [
+			'title' => get_the_title(),
+			'permalink' => get_the_permalink()
+		];
+	}
+
+	return $professorList;
 }
