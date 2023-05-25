@@ -42,27 +42,36 @@ class Search {
     }
 
     getResults() {
-        $.when(
-            $.getJSON(siteData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()),
-            $.getJSON(siteData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())
-        ).then((posts, pages) => {
-            var concatResults = posts[0].concat(pages[0])
+        $.getJSON(universityData.root_url + "/wp-json/university/v1/search?term=" + this.searchField.val(), results => {
             this.resultsDiv.html(`
-                <h2 class="search-overlay__section-title">Search Results</h2>
-                ${concatResults.length ? '<ul class="link-list min-list">' : '<p>No results found</p>'}
-                <ul class="link-list min-list">
-                    ${concatResults.map(concatResult=> `
-                        <li>
-                            <a href="${concatResult.link}">${concatResult.title.rendered}</a>
-                            ${concatResult.type === 'post' ? ` by ${concatResult.authorName}` : ''}
-                        </li>
-                    `)}
-                ${concatResults.length ? '</ul>' : ''}
-            `)
-        }, () => {
-            this.resultsDiv.html(`<p>Ooopss something went wrong</p>`)
+        <div class="row">
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">General Information</h2>
+            ${results.generalInfo.length ? '<ul class="link-list min-list">' : "<p>No general information matches that search.</p>"}
+              ${results.generalInfo.map(item => `<li><a href="${item.permalink}">${item.title}</a> ${item.postType == "post" ? `by ${item.authorName}` : ""}</li>`).join("")}
+            ${results.generalInfo.length ? "</ul>" : ""}
+          </div>
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">Programs</h2>
+            ${results.programs.length ? '<ul class="link-list min-list">' : `<p>No programs match that search. <a href="${universityData.root_url}/programs">View all programs</a></p>`}
+              ${results.programs.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join("")}
+            ${results.programs.length ? "</ul>" : ""}
+
+            <h2 class="search-overlay__section-title">Professors</h2>
+
+          </div>
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">Campuses</h2>
+            ${results.campuses.length ? '<ul class="link-list min-list">' : `<p>No campuses match that search. <a href="${universityData.root_url}/campuses">View all campuses</a></p>`}
+              ${results.campuses.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join("")}
+            ${results.campuses.length ? "</ul>" : ""}
+
+            <h2 class="search-overlay__section-title">Events</h2>
+          </div>
+        </div>
+      `)
+            this.isSpinnerVisible = false
         })
-        this.isSpinnerVisible = false
     }
 
     manageKeyDown(e) {
