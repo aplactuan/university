@@ -42,7 +42,7 @@ class Search {
     }
 
     getResults() {
-        $.getJSON(universityData.root_url + "/wp-json/university/v1/search?term=" + this.searchField.val(), results => {
+        $.getJSON(siteData.root_url + "/wp-json/university/v1/search?term=" + this.searchField.val(), results => {
             this.resultsDiv.html(`
         <div class="row">
           <div class="one-third">
