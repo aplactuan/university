@@ -11,7 +11,7 @@ function universityRegisterRoute() {
 function universitySearchResults($data) {
 	$mainQuery = new WP_Query([
 		'post_type' => ['page', 'post', 'professor', 'event', 'campus', 'program'],
-		's' => sanitize_text_field($data['keyword'])
+		's' => sanitize_text_field($data['term'])
 	]);
 
 	$results = [
