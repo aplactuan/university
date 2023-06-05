@@ -40,7 +40,7 @@ function fake_university_post_types() {
 		'has_archive' => true,
 		'public' => true,
 		'show_in_rest' => true,
-		'supports' => ['title', 'editor'],
+		'supports' => ['title'],
 		'menu_icon' => 'dashicons-awards',
 		'labels' => [
 			'name' => 'Programs',

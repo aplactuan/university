@@ -79,20 +79,35 @@ function universitySearchResults($data) {
 			]);
 		}
 		$relatedProfessorsQuery = new WP_Query([
-			'post_type' => 'professor',
+			'post_type' => ['professor', 'event'],
 			'meta_query' =>$relatedProfessorMetaQuery
 		]);
 
 		while ($relatedProfessorsQuery->have_posts()) {
 			$relatedProfessorsQuery->the_post();
-			$results['professors'][] = [
-				'title' => get_the_title(),
-				'permalink' => get_the_permalink(),
-				'image' => get_the_post_thumbnail_url(0, 'professorLandscape')
-			];
+
+			if (get_post_type() == 'professor') {
+				$results['professors'][] = [
+					'title'     => get_the_title(),
+					'permalink' => get_the_permalink(),
+					'image'     => get_the_post_thumbnail_url( 0, 'professorLandscape' )
+				];
+			}
+
+			if (get_post_type() == 'event') {
+				$eventDate = new DateTime(get_field('event_date'));
+				$results['events'][] = [
+					'title' => get_the_title(),
+					'permalink' => get_the_permalink(),
+					'description' => has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18),
+					'month' => $eventDate->format('M'),
+					'day' => $eventDate->format('d')
+				];
+			}
 		}
 
-		$results['professors'] = array_values(array_unique($results['professors'], SORT_ASC));
+		$results['professors'] = array_values(array_unique($results['professors'], SORT_REGULAR));
+		$results['events'] = array_values(array_unique($results['events'], SORT_REGULAR));
 	}
 
 	return $results;

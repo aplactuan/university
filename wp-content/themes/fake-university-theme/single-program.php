@@ -12,7 +12,7 @@ while (have_posts()) :
 			</p>
 		</div>
 		<div class="generic-content">
-			<?php the_content() ?>
+			<?php the_field('main_content_body') ?>
 		</div>
 		<?php
 		$programProfessors = new WP_Query([
