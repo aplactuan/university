@@ -41,6 +41,14 @@ function universitySearchResults($data) {
 		}
 
 		if (get_post_type() == 'program') {
+			if ($relatedCampuses = get_field('related_campus')) {
+				foreach ($relatedCampuses as $campus) {
+					array_push($results['campuses'], [
+						'title' => get_the_title($campus),
+						'permalink' => get_the_permalink($campus)
+					]);
+				}
+			}
 			$results['programs'][] = [
 				'title' => get_the_title(),
 				'permalink' => get_the_permalink(),
@@ -106,6 +114,7 @@ function universitySearchResults($data) {
 			}
 		}
 
+		$results['campuses'] = array_values(array_unique($results['campuses'], SORT_REGULAR));
 		$results['professors'] = array_values(array_unique($results['professors'], SORT_REGULAR));
 		$results['events'] = array_values(array_unique($results['events'], SORT_REGULAR));
 	}
