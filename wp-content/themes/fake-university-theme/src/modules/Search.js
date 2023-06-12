@@ -52,7 +52,7 @@ class Search {
 
     async getResults() {
         try {
-            const response = await axios.get(universityData.root_url + "/wp-json/university/v1/search?term=" + this.searchField.value)
+            const response = await axios.get(siteData.root_url + "/wp-json/university/v1/search?term=" + this.searchField.value)
             const results = response.data
             this.resultsDiv.innerHTML = `
         <div class="row">
@@ -64,7 +64,7 @@ class Search {
           </div>
           <div class="one-third">
             <h2 class="search-overlay__section-title">Programs</h2>
-            ${results.programs.length ? '<ul class="link-list min-list">' : `<p>No programs match that search. <a href="${universityData.root_url}/programs">View all programs</a></p>`}
+            ${results.programs.length ? '<ul class="link-list min-list">' : `<p>No programs match that search. <a href="${siteData.root_url}/programs">View all programs</a></p>`}
               ${results.programs.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join("")}
             ${results.programs.length ? "</ul>" : ""}
 
@@ -87,12 +87,12 @@ class Search {
           </div>
           <div class="one-third">
             <h2 class="search-overlay__section-title">Campuses</h2>
-            ${results.campuses.length ? '<ul class="link-list min-list">' : `<p>No campuses match that search. <a href="${universityData.root_url}/campuses">View all campuses</a></p>`}
+            ${results.campuses.length ? '<ul class="link-list min-list">' : `<p>No campuses match that search. <a href="${siteData.root_url}/campuses">View all campuses</a></p>`}
               ${results.campuses.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join("")}
             ${results.campuses.length ? "</ul>" : ""}
 
             <h2 class="search-overlay__section-title">Events</h2>
-            ${results.events.length ? "" : `<p>No events match that search. <a href="${universityData.root_url}/events">View all events</a></p>`}
+            ${results.events.length ? "" : `<p>No events match that search. <a href="${siteData.root_url}/events">View all events</a></p>`}
               ${results.events
                 .map(
                     item => `
