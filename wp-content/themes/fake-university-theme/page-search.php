@@ -6,10 +6,7 @@ while(have_posts()) {
 	the_post();
 	pageBanner();
 	?>
-
-
-
-	<div class="container container--narrow page-section">
+    <div class="container container--narrow page-section">
 
 		<?php
 		$theParent = wp_get_post_parent_id(get_the_ID());
@@ -20,9 +17,7 @@ while(have_posts()) {
 		<?php }
 		?>
 
-
-
-		<?php
+        <?php
 		$testArray = get_pages(array(
 			'child_of' => get_the_ID()
 		));
@@ -48,18 +43,10 @@ while(have_posts()) {
 			</div>
 		<?php } ?>
 
-
-		<div class="generic-content">
-			<form class="search-form" method="get" action="<?php echo esc_url(site_url('/')); ?>">
-				<label class="headline headline--medium" for="s">Perform a New Search:</label>
-				<div class="search-form-row">
-					<input placeholder="What are you looking for?" class="s" id="s" type="search" name="s">
-					<input class="search-submit" type="submit" value="Search">
-				</div>
-			</form>
+        <div class="generic-content">
+			<?php get_search_form() ?>
 		</div>
-
-	</div>
+    </div>
 
 <?php }
 
