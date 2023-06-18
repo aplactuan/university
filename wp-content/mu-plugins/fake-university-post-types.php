@@ -2,6 +2,8 @@
 function fake_university_post_types() {
 	//Campust post type
 	register_post_type('campus', [
+		'capability_type' => 'campuses',
+		'map_meta_cap' => true,
 		'rewrite' => ['slug' => 'campuses'],
 		'has_archive' => true,
 		'public' => true,
@@ -19,6 +21,8 @@ function fake_university_post_types() {
 
 	//Event post type
 	register_post_type('event', [
+		'capability_type' => 'campuses',
+		'map_meta_cap' => true,
 		'rewrite' => ['slug' => 'events'],
 		'has_archive' => true,
 		'public' => true,
