@@ -99,3 +99,24 @@ function fake_university_google_api($api) {
     return $api;
 }
 add_filter('acf/fields/google_map/api', 'fake_university_google_api');
+
+add_action('admin_init', 'redirectSubscriberToHome');
+
+function redirectSubscriberToHome() {
+    $currentUser = wp_get_current_user();
+
+    if (count($currentUser->roles) == 1 && $currentUser->roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+
+add_action('wp_loaded', 'noAdminBarForSub');
+
+function noAdminBarForSub() {
+	$currentUser = wp_get_current_user();
+
+	if (count($currentUser->roles) == 1 && $currentUser->roles[0] == 'subscriber') {
+		show_admin_bar(false);
+	}
+}
