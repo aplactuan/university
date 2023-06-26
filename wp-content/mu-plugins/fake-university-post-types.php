@@ -69,6 +69,21 @@ function fake_university_post_types() {
 			'singular_name' => 'Professor'
 		]
 	]);
+
+	register_post_type('note', [
+		'public' => false,
+		'show_ui' => true,
+		'show_in_rest' => true,
+		'supports' => ['title', 'editor'],
+		'menu_icon' => 'dashicons-clipboard',
+		'labels' => [
+			'name' => 'Notes',
+			'add_new_item' => 'Add new Notes',
+			'edit_item' => 'Edit Notes',
+			'all_items' => 'All Notes',
+			'singular_name' => 'Note'
+		]
+	]);
 }
 
 add_action('init', 'fake_university_post_types');
