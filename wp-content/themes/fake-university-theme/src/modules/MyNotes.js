@@ -9,7 +9,21 @@ class MyNotes {
     }
 
     deleteNote() {
-        alert("You are about to be deleted")
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', siteData.nonce)
+            },
+            url: siteData.root_url + '/wp-json/wp/v2/note/76',
+            method: 'DELETE',
+            success: (response) => {
+                console.log("DELETED")
+                console.log(response)
+            },
+            error: (response) => {
+                console.log("ERROR")
+                console.log(response)
+            }
+        })
     }
 }
 

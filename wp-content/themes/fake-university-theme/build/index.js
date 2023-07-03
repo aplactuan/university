@@ -2251,7 +2251,21 @@ class MyNotes {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
   }
   deleteNote() {
-    alert("You are about to be deleted");
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', siteData.nonce);
+      },
+      url: siteData.root_url + '/wp-json/wp/v2/note/76',
+      method: 'DELETE',
+      success: response => {
+        console.log("DELETED");
+        console.log(response);
+      },
+      error: response => {
+        console.log("ERROR");
+        console.log(response);
+      }
+    });
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (MyNotes);
