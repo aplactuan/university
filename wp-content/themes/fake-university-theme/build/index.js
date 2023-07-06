@@ -2250,14 +2250,16 @@ class MyNotes {
   events() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
   }
-  deleteNote() {
+  deleteNote(e) {
+    const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', siteData.nonce);
       },
-      url: siteData.root_url + '/wp-json/wp/v2/note/76',
+      url: siteData.root_url + '/wp-json/wp/v2/note/' + thisNote.data("id"),
       method: 'DELETE',
       success: response => {
+        thisNote.slideUp();
         console.log("DELETED");
         console.log(response);
       },
