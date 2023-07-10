@@ -11,8 +11,27 @@ class MyNotes {
 
     editNote(e) {
         const thisNote = $(e.target).parents("li");
+       if (thisNote.data("state") === "readonly") {
+           this.makeNoteReadOnly(thisNote)
+       } else {
+           alert("sdjlfksdjfl");
+           this.makeNoteReadOnly(thisNote)
+       }
+    }
+
+    makeNoteEditable(thisNote) {
         thisNote.find(".note-title-field, .note-body-field").removeAttr("readonly").addClass("note-active-field")
         thisNote.find(".update-note").addClass("update-note--visible")
+        thisNote.data("state", "readonly")
+    }
+
+    makeNoteReadOnly(thisNote) {
+        thisNote.find(".edit-note").html(`
+            <i class="fa fa-pencil" aria-hidden="true"></i>Edit
+        `)
+        thisNote.find(".note-title-field, .note-body-field").attr("readonly", "readonly").removeClass("note-active-field")
+        thisNote.find(".update-note").removeClass("update-note--visible")
+        thisNote.data("state", "cancel")
     }
 
     deleteNote(e) {
