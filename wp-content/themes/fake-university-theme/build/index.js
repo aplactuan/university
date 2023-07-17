@@ -2250,6 +2250,7 @@ class MyNotes {
   events() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".edit-note").on("click", this.editNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".update-note").on("click", this.updateNote.bind(this));
   }
   editNote(e) {
     const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
@@ -2285,6 +2286,30 @@ class MyNotes {
       method: 'DELETE',
       success: response => {
         thisNote.slideUp();
+        console.log("DELETED");
+        console.log(response);
+      },
+      error: response => {
+        console.log("ERROR");
+        console.log(response);
+      }
+    });
+  }
+  updateNote(e) {
+    const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
+    const updatedPostAttribute = {
+      title: thisNote.find(".note-title-field").val(),
+      content: thisNote.find(".note-body-field").val()
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', siteData.nonce);
+      },
+      url: siteData.root_url + '/wp-json/wp/v2/note/' + thisNote.data("id"),
+      method: 'POST',
+      data: updatedPostAttribute,
+      success: response => {
+        this.makeNoteReadOnly(thisNote);
         console.log("DELETED");
         console.log(response);
       },
