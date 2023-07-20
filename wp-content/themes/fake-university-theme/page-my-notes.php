@@ -9,6 +9,12 @@ while (have_posts()) :
 	pageBanner();
 	?>
 	<div class="container container--narrow page-section">
+        <div class="create-note">
+            <h2 class="headline headline--medium">Create Note</h2>
+            <input type="text" class="new-note-title" placeholder="Enter Title">
+            <textarea class="new-note-body" placeholder="Enter Description"></textarea>
+            <span class="submit-note">Submit</span>
+        </div>
 		<?php
             $userNotes = new WP_Query([
                 'post_type' => 'note',
