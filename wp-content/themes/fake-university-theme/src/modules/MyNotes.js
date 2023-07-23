@@ -8,6 +8,7 @@ class MyNotes {
         $(".delete-note").on("click", this.deleteNote)
         $(".edit-note").on("click", this.editNote.bind(this))
         $(".update-note").on("click", this.updateNote.bind(this))
+        $(".submit-note").on("click", this.createNote.bind(this))
     }
 
     editNote(e) {
@@ -75,6 +76,31 @@ class MyNotes {
                 this.makeNoteReadOnly(thisNote)
                 console.log("DELETED")
                 console.log(response)
+            },
+            error: (response) => {
+                console.log("ERROR")
+                console.log(response)
+            }
+        })
+    }
+
+    createNote(e) {
+        const newNoteAttribute = {
+            title: $(".new-note-title").val(),
+            content: $(".new-note-body").val(),
+        }
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', siteData.nonce)
+            },
+            url: siteData.root_url + '/wp-json/wp/v2/note/',
+            method: 'POST',
+            data: newNoteAttribute,
+            success: (response) => {
+                $(".new-note-title, .new-note-body").val()
+                $(`
+                    <li>Test Date</li>
+                `).prepend("#my-notes").hide().slideDown()
             },
             error: (response) => {
                 console.log("ERROR")
