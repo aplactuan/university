@@ -22,7 +22,7 @@ while (have_posts()) :
                 'author' => get_current_user_id()
             ]);
             if ($userNotes->have_posts()) : ?>
-                <ul class="my-notes min-list">
+                <ul class="min-list" id="my-notes">
 	                <?php
 	                while ($userNotes->have_posts()) :
 	                $userNotes->the_post();

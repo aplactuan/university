@@ -2248,9 +2248,9 @@ class MyNotes {
     this.events();
   }
   events() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".edit-note").on("click", this.editNote.bind(this));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".update-note").on("click", this.updateNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".delete-note", this.deleteNote);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".submit-note").on("click", this.createNote.bind(this));
   }
   editNote(e) {
@@ -2323,7 +2323,8 @@ class MyNotes {
   createNote(e) {
     const newNoteAttribute = {
       title: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title").val(),
-      content: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val()
+      content: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val(),
+      status: 'publish'
     };
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
@@ -2333,10 +2334,16 @@ class MyNotes {
       method: 'POST',
       data: newNoteAttribute,
       success: response => {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title, .new-note-body").val();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title, .new-note-body").val('');
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(`
-                    <li>Test Date</li>
-                `).prepend("#my-notes").hide().slideDown();
+                    <li data-id="${response.id}">
+                        <input type="text" readonly class="note-title-field" value="${response.title.raw}">
+                        <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</span>
+                        <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</span>
+                        <textarea readonly class="note-body-field">${response.content.raw}</textarea>
+                        <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i>Edit</span>
+                    </li>
+                `).prependTo("#my-notes").hide().slideDown();
       },
       error: response => {
         console.log("ERROR");
