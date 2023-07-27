@@ -71,6 +71,8 @@ function fake_university_post_types() {
 	]);
 
 	register_post_type('note', [
+		'capability_type' => 'notes',
+		'map_meta_cap' => true,
 		'public' => false,
 		'show_ui' => true,
 		'show_in_rest' => true,
