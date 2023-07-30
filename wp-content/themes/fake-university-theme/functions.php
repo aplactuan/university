@@ -141,3 +141,12 @@ add_filter('login_headertext', 'fake_university_login_header_text');
 function fake_university_login_header_text() {
     return get_bloginfo('name');
 }
+
+add_filter('wp_insert_post_data', 'fake_university_make_not_private');
+function fake_university_make_not_private($data) {
+    if ($data['post_type'] === 'note' && $data['post_status'] !== 'trash') {
+        $data['post_status'] = 'private';
+    }
+
+    return $data;
+}
