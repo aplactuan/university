@@ -14,6 +14,7 @@ while (have_posts()) :
             <input type="text" class="new-note-title" placeholder="Enter Title">
             <textarea class="new-note-body" placeholder="Enter Description"></textarea>
             <span class="submit-note">Submit</span>
+            <span class="note-limit-message">You have reached your note limit</span>
         </div>
 		<?php
             $userNotes = new WP_Query([

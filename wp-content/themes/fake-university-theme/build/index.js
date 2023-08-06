@@ -2287,6 +2287,9 @@ class MyNotes {
       method: 'DELETE',
       success: response => {
         thisNote.slideUp();
+        if (response.userNoteCount < 5) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".note-limit-message").removeClass("active");
+        }
         console.log("DELETED");
         console.log(response);
       },
@@ -2346,6 +2349,9 @@ class MyNotes {
                 `).prependTo("#my-notes").hide().slideDown();
       },
       error: response => {
+        if (response.responseText == 'You have reach your limit') {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".note-limit-message").addClass('active');
+        }
         console.log("ERROR");
         console.log(response);
       }
